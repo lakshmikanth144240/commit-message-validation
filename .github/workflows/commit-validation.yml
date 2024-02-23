@@ -28,7 +28,7 @@ jobs:
           COMMIT_MESSAGES=$(git log --format=%s -n 1 ${{ github.sha }})
           # Check each commit message against the pattern
           for message in $commit_messages; do
-          if ! [[ $message =~ $commit_message_pattern ]]; then
+          if [[ $message =~ $commit_message_pattern ]]; then
                 echo "Invalid commit message: $message"
               exit 1
             fi
