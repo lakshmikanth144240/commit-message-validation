@@ -6,7 +6,7 @@ pull_request:
     types: [opened, reopened]
     branches:
       - main
-      - commit-validation
+      - commit-message-validation
 # permissions:
 jobs:
   validate-commit-message:
