@@ -24,7 +24,6 @@ jobs:
           commit_message_pattern="^FLTNBE-[0-9]{4}+:\s+[A-Za-z0-9]+"
 
           # Get the commit messages in the pull request
-          #
           # commit_messages=$(git log --format=%B ${{ github.event.before }}..${{ github.event.after }})
           COMMIT_MESSAGES=$(git log --format=%s -n 1 ${{ github.sha }})
           # Check each commit message against the pattern
