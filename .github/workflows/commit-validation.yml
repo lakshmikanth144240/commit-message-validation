@@ -24,6 +24,7 @@ jobs:
           # Get the commit messages in the pull request
           commit_messages=$(git log --format=%B ${{ github.event.before }}..${{ github.event.after }})
           # Check each commit message against the pattern
+          #
           for message in $commit_messages; do
           if ! [[ $message =~ $commit_message_pattern ]]; then
                 echo "Invalid commit message: $message"
