@@ -18,15 +18,18 @@ jobs:
 
       - name: Validate commit messages
         run: |
-          # Retrieve the list of commits in the push
-          # COMMIT_MESSAGES=$(git log --format=%s ${{ github.event.before }}..${{ github.sha }})
-          # COMMIT_MESSAGES=$(git log --format=%s ${{ github.sha }})
-          COMMIT_MESSAGES=$(git log --format=%s -n 1 ${{ github.sha }})
+          # Define the regex pattern for a valid commit message
+          commit_message_pattern="^FLTNBE-[0-9]{4}+:\s+[A-Za-z0-9]+"
 
-          # Iterate over each commit message and validate
-          for message in $COMMIT_MESSAGES; do
-            if [[ $message =~ ^FLTNBE-[0-9]{4}+:\s+[A-Za-z0-9]+ ]]; then
-               echo "Invalid commit message format: $message"
+          # Get the commit messages in the pull request
+          commit_messages=$(git log --format=%B ${{ github.event.before }}..${{ github.event.after }})
+          # Check each commit message against the pattern
+          for message in $commit_messages; do
+          if ! [[ $message =~ $commit_message_pattern ]]; then
+                echo "Invalid commit message: $message"
               exit 1
             fi
           done
+
+          echo "All commit messages are valid."
+
