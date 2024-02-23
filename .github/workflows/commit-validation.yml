@@ -22,28 +22,9 @@ jobs:
           # COMMIT_MESSAGES=$(git log --format=%s ${{ github.event.before }}..${{ github.sha }})
           # COMMIT_MESSAGES=$(git log --format=%s ${{ github.sha }})
           COMMIT_MESSAGES=$(git log --format=%s -n 1 ${{ github.sha }})
-          # echo $COMMIT_MESSAGES
 
           # Iterate over each commit message and validate
           for message in $COMMIT_MESSAGES; do
-            # Implement your validation logic here, e.g., checking for a specific pattern
-            # if [[ ! $message =~ ^[A-Z]+-[0-9]+:.+ ]]; then
-            # if [[ ! $message =~ ^FLTNBE-[0-9]{4}+:..+ ]]; then
-            # if [[ ! $message =~ ^FLTNBE-\d{4}:\s+.+ ]]; then
-            # FLTNBE is mandatory and after "-" digit must be 4 digit
-            # right expressions are FLENBE-3456: and FLTNBE-0507:message
-            # if [[ ! $message =~ ^FLTNBE-[0-9]{4}+:+ ]]; then
-            # if [[ ! $message =~ ^FLTNBE-[0-9]{4}+:\s+ ]]; then
-            # testing space after ":"
-            # if [[ ! $message =~ ^FLTNBE-[0-9]{4}+:\s+[A-Za-z0-9]+ ]]; then
-            # testing after removing "!" in above condition
-            # valid expressions are "FLTNBE:1234: some" & "FLTNBE-3456: Something"
-            # "FLTNBE-4567: SOMETHING" "FLTNBE-5678: some12" "FLTNB-3789: some message"
-            # "FLTNBE-3490: some message 12" "FLTNBE-4678: some message - 21"
-            # "FLTNBE-7899: some message (100)" "FLTNBE-7899: some message @vinod"
-            # "FLTNBE-3490: some message update_stop" "FLTNBE-3490: some message api/v1/update_stop"
-            # "FLTNBE-3490: Testing the outcome with %" "FLTNBE-3490: Testing the outcome with #50"
-            # "FLTNBE-3490: Testing the outcome with &, !" "FLTNBE-3490: Testing the outcome with {some}"
             if [[ $message =~ ^FLTNBE-[0-9]{4}+:\s+[A-Za-z0-9]+ ]]; then
                echo "Invalid commit message format: $message"
               exit 1
