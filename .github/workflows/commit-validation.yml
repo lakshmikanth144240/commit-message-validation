@@ -2,11 +2,11 @@ name: Commit Message Validation
 
 on:
 #   push:
-    pull_request:
-        types: [opened, reopened]
-        branches:
-          - main
-          - commit-message-validation
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - main
+      - commit-message-validation
 # permissions:
 jobs:
   validate-commit-message:
