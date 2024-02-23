@@ -1,9 +1,9 @@
 name: Commit Message Validation
 
-# on:
+on:
 #   push:
-pull_request:
-    types: [opened, reopened]
+    pull_request:
+        types: [opened, reopened]
     branches:
       - main
       - commit-message-validation
