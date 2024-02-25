@@ -4,27 +4,20 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
     branches:
-      - main
-      - commit-message-validation
+      - testing
 jobs:
   validate-commit-message:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Validate commit messages
         run: |
-          commit_message_pattern="^FLTNBE-[0-9]{4}+:\s+[A-Za-z0-9]+"
           COMMIT_MESSAGE=$(git log --format=%s -n 1 ${{ github.sha }})
           echo $COMMIT_MESSAGE
-          for message in $COMMIT_MESSAGE; do
-          if [[ ! "$COMMIT_MESSAGE" =~ $commit_message_pattern ]]; then
-                echo "Invalid commit message: $message"
-              exit 1
-            fi
-          done
-
-          echo "All commit messages are valid."
-
+          PATTERN="^FLTNBE-[0-9]{4}+:\s+[A-Za-z0-9]+"
+          if ! [[ $COMMIT_MESSAGE =~ $PATTERN ]]; then
+              echo "Error: Commit message does not match the required pattern."
+            exit 1
+          fi
+          echo "Commit message matches the pattern."
